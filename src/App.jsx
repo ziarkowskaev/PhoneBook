@@ -25,17 +25,11 @@ const App = () => {
 
     const addPerson = (event) => {
         event.preventDefault()
-
+    
         const personObject = {
             name: newName,
-            number: newNumber,
-            id: persons.length +1
+            number: newNumber
         }
-
-        while(persons.some(db => db.id == personObject.id)){
-          personObject.id++
-        }
-
 
         const user = persons.find(person => person.name === newName);
 
@@ -59,7 +53,7 @@ const App = () => {
                 })
                 .catch(error => {
                   setErrorMessage(
-                    `Information of ${user.name}' has already been removed from server`
+                    `Information of ${user.name}' has already been removed from server or ${error.response.data.error}`
                   )
                   setTimeout(() => {
                     setErrorMessage(null)
@@ -76,7 +70,7 @@ const App = () => {
           //ADD NEW PERSON
           personService
           .create(personObject)
-          .then(returnedPerson => {
+            .then(returnedPerson => {
             setPersons(persons.concat(returnedPerson))
             setNewName('')
             setNewNumber('')
@@ -87,6 +81,14 @@ const App = () => {
               setInfoMessage(null)
             }, 5000)
           })
+          .catch(error => {
+            setErrorMessage(
+              `${error.response.data.error}`
+            )
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 5000)
+          })
 
         }
 
@@ -95,12 +97,12 @@ const App = () => {
 
 
     const deletePerson = id => {
-      const url = `http://localhost:3001/persons/${id}`
       const person = persons.find(n => n.id === id)
     
       personService
         .deleteP(id)
           .then(() => {
+            //needed to refresh page to see data removed
           setPersons(persons.filter(person => person.id != id))
         })
         .catch(error => {
