@@ -25,3 +25,5 @@ JSON server as the local database, handling contact information.
 Note: Ensure the JSON server is running locally for the application to interact with the database.
 
 npx json-server --port 3001 --watch db.json
+
+The branch "integrated" includes updated files that were used to integrated backend with frontend.
