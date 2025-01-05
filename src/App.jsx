@@ -122,27 +122,27 @@ const App = () => {
   }
 
     return (
-        <div>
+        <div style={{ textAlign: 'center', marginTop: '50px'}}>
             <h2>Phonebook</h2>
             <Notification id ="bad" message={errorMessage} />
             <Notification message={infoMessage} />
             <form onSubmit={addPerson}>
                 <div>
-                    name:
+                    Name:
                     <input value={newName}
                         onChange={handleNameChange}/>
                 </div>
                 <div>
-                    number:
+                    Phone number:
                     <input value={newNumber}
                         onChange={handleNumberChange}/>
                 </div>
 
                 <div>
-                    <button type="submit">add</button>
+                    <button type="submit">Add</button>
                 </div>
             </form>
-            <h2>Numbers</h2>
+            <h2 style={{marginTop: '20px' }}>Numbers</h2>
              {
                 persons.map(person => 
                 <Person 
